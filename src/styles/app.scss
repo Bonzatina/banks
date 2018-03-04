@@ -1,0 +1,38 @@
+
+
+.app_wrapper {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  min-height: 50vh;
+  width: 800px;
+  border: 1px solid black;
+}
+
+.app_body {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.app_body_text {
+  width: 70%;
+  text-align: center;
+}
+
+.app_body_nav {
+
+}
+
+.login_form {
+
+}
+
+.has-error {
+  border: 1px solid red;
+}
+
+.help-block {
+margin: 5px;
+}
