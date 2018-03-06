@@ -1,6 +1,7 @@
 import React from 'react';
-import { connect } from "react-redux";
-import { transactionsActions } from '../actions';
+import {connect} from "react-redux";
+
+import {transactionsActions} from '../actions';
 
 class NewTrans extends React.Component {
 
@@ -8,9 +9,9 @@ class NewTrans extends React.Component {
         super(props);
 
         this.state = {
-                amount: '',
-                bank: '',
-                // submitted: false
+            amount: '',
+            bankId: '',
+            submitted: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -18,49 +19,79 @@ class NewTrans extends React.Component {
     }
 
     handleChange(e) {
-        const { name, value } = e.target;
-        this.setState({ [name]: value });
+        const {name, value} = e.target;
+
+        if (name === "bankId") {
+            const banks = this.props.banks;
+            const bank = banks.filter(function (bank) {
+
+                return bank.bankName === value;
+            });
+            console.log(bank)
+            if (bank.length > 0) {
+                this.setState({[name]: bank[0].bankId});
+            }
+            else {
+                this.setState({[name]: ''});
+            }
+        }
+
+        else {
+            this.setState({[name]: value});
+        }
     }
 
     handleSubmit(event) {
         event.preventDefault();
 
-        // this.setState({ submitted: true });
-        const transaction  = this.state;
-        if (transaction.amount && transaction.bank) {
+        const transaction = this.state;
+
+        this.setState({submitted: true});
+        if (transaction.amount && transaction.bankId) {
             this.props.dispatch(transactionsActions.addTransaction(transaction));
         }
     }
 
     render() {
-        const { amount, bank } = this.state;
+        const {amount, submitted, bankId} = this.state;
+        const banks = this.props.banks;
+
+        const BankSelect = banks && banks.map((bank) => {
+
+            return <option key={bank.bankId} value={banks.bankId}>{bank.bankName}</option>
+        })
+
+
         return (
             <div>
-            <h1>New Transaction</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <div className="form-group">
+                <h1>New Transaction</h1>
+                <form className="app_form" onSubmit={this.handleSubmit}>
+                    <div>
                         <label>Amount</label>
                         <input
-                            type="text"
-                            className="form-control"
-                            id="title"
+                            type="number"
                             name="amount"
                             value={amount}
                             onChange={this.handleChange}
                         />
+                        {submitted && !amount &&
+                        <div className="help-block">Amount is required</div>
+                        }
                         <br/>
-                        <label htmlFor="title">Bank</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="title"
-                            name="bank"
-                            value={bank}
-                            onChange={this.handleChange}
-                        />
-
                     </div>
-                    <button type="submit" >
+                    <div>
+                        <label htmlFor="title">Bank</label>
+
+                        {banks && <select name="bankId"
+                                          onChange={this.handleChange}>
+                            <option defaultValue>Choose the bank from the list</option>
+                            {BankSelect}
+                        </select>}
+                        {submitted && !bankId &&
+                        <div className="help-block">Choose the bank</div>
+                        }
+                    </div>
+                    <button className="submit_button" type="submit">
                         Make Transaction
                     </button>
                 </form>
@@ -70,7 +101,7 @@ class NewTrans extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return { appState: state };
+    return {appState: state};
 };
 
 const connectedNewTrans = connect(mapStateToProps)(NewTrans);

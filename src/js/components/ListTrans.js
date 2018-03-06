@@ -1,12 +1,13 @@
 import React from 'react';
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
-import { transactionsActions } from '../actions';
+import {transactionsActions} from '../actions';
 
-class TransList extends React.Component {
+class ListTrans extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(transactionsActions.getAll());
+        this.props.dispatch(transactionsActions.getBanksList());
     }
 
     handleDeleteTransaction(id) {
@@ -15,32 +16,47 @@ class TransList extends React.Component {
 
     render() {
         const transactions = this.props.appState.transactions.items;
+        const banks = this.props.banks;
 
-        return (
-            <div>
-            <h1>List of transactions !</h1>
-                <div>
-                    {transactions && <ul>
-                        {transactions.map((transaction, index) =>
-                            <li key={transaction.id}>
-                                {transaction.id + ' ' + transaction.amount}
-                                {
-                                    transaction.deleting ? <em> - Deleting...</em>
-                                        : transaction.deleteError ? <span className="error"> - ERROR: {transaction.deleteError}</span>
-                                        : <span> - <a onClick={()=> this.handleDeleteTransaction(transaction.id)}>Delete</a></span>
-                                }
-                            </li>
-                        )}
-                    </ul>}
-                </div>
+        const Transactions = transactions && banks && transactions.map((transaction) => {
+
+            const bank = banks.filter(function (bank) {
+                return bank.bankId === transaction.bankId;
+            });
+
+            return <tr key={transaction.id}>
+                <td>{transaction.id}</td>
+                <td>{transaction.amount}</td>
+                <td>{bank[0].bankName}</td>
+                <td>{
+                    transaction.deleting ? <em> - Deleting...</em>
+                        : transaction.deleteError ? <span className="has-error"> - ERROR: {transaction.deleteError}</span>
+                        : <button onClick={() => this.handleDeleteTransaction(transaction.id)}> Delete</button>
+                }</td>
+            </tr>
+        })
+
+        return ( <div>
+                <h1>List of transactions!</h1>
+                <table className="trans_table">
+                    <tbody>
+                    <tr>
+                        <th>transaction ID</th>
+                        <th>amount</th>
+                        <th>Bank</th>
+                        <th></th>
+                    </tr>
+                    {Transactions}
+                    </tbody>
+                </table>
             </div>
         );
     }
 }
 
 const mapStateToProps = state => {
-    return { appState: state };
+    return {appState: state};
 };
 
-const connectedTransList = connect(mapStateToProps)(TransList);
-export default connectedTransList;
+const connectedListTrans = connect(mapStateToProps)(ListTrans);
+export default connectedListTrans;

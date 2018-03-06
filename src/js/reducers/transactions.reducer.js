@@ -1,40 +1,35 @@
-import { ADD_ARTICLE } from "../constants/index";
+
 import { transactionsConstants } from "../constants/index";
 
 const initialState = {
     transactions: []
 };
 export function transactions  (state = initialState, action)  {
-    // console.log(action)
+
     switch (action.type) {
 
 
-        case ADD_ARTICLE:
-            return { ...state, articles: [...state.articles, action.payload] };
-
         case transactionsConstants.GETALL_REQUEST:
             return {
-                loading: true
+                ...state, loading: true
             };
         case transactionsConstants.GETALL_SUCCESS:
             return {
-                items: action.transactions
+                ...state, items: action.transactions
             };
         case transactionsConstants.GETALL_FAILURE:
             return {
-                error: action.error
+                ...state, error: action.error
             };
 
 
 
         case transactionsConstants.ADD_REQUEST:
-            // add 'deleting:true' property to user being deleted
             return {...state};
         case transactionsConstants.ADD_SUCCESS:
-            return {...state};
+            return {...state, message: action.message};
         case transactionsConstants.ADD_FAILURE:
-            // remove 'deleting:true' property and add 'deleteError:[error]' property to user
-            return {...state};
+            return {...state,     error: action.error};
 
 
 
@@ -50,7 +45,7 @@ export function transactions  (state = initialState, action)  {
             };
         case transactionsConstants.DELETE_SUCCESS:
             return {
-                items: state.items.filter(transaction => transaction.id !== action.id)
+                ...state, items: state.items.filter(transaction => transaction.id !== action.id)
             };
         case transactionsConstants.DELETE_FAILURE:
             // remove 'deleting:true' property and add 'deleteError:[error]' property to user
@@ -63,7 +58,6 @@ export function transactions  (state = initialState, action)  {
                         // return copy of user with 'deleteError:[error]' property
                         return { ...transactionCopy, deleteError: action.error };
                     }
-
                     return transaction;
                 })
             };

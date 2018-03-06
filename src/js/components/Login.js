@@ -43,17 +43,17 @@ class Login extends React.Component {
         const { username, password, submitted } = this.state;
 
         return (
-            <div className="login_form">
+            <div>
                 <h2>Login</h2>
-                <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
+                <form className="app_form" name="form" onSubmit={this.handleSubmit}>
+                    <div className={'login_form_field' + (submitted && !username ? ' has-error' : '')}>
                         <label htmlFor="username">Username</label>
                         <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
                         {submitted && !username &&
                         <div className="help-block">Username is required</div>
                         }
                     </div>
-                    <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
+                    <div className={'login_form_field' + (submitted && !password ? ' has-error' : '')}>
                         <label htmlFor="password">Password</label>
                         <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
                         {submitted && !password &&

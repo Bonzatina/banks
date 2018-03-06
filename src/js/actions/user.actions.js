@@ -18,7 +18,6 @@ function login(username, password) {
                 },
                 error => {
                     dispatch(failure(error));
-                  //  dispatch(alertActions.error(error));
                 }
             );
     };

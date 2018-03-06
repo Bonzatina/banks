@@ -1,5 +1,5 @@
-import { ADD_ARTICLE } from "../constants/index";
 import { transactionsConstants } from "../constants/index";
+import { history } from '../helpers/history'
 import { authHeader } from '../helpers';
 
 export const addArticle = article => ({ type: ADD_ARTICLE, payload: article });
@@ -7,7 +7,8 @@ export const addArticle = article => ({ type: ADD_ARTICLE, payload: article });
 export const transactionsActions = {
     getAll,
     deleteTransaction,
-    addTransaction
+    addTransaction,
+    getBanksList
 };
 
 function getAll() {
@@ -36,19 +37,17 @@ function addTransaction(transaction) {
         fetch_addTransaction(transaction)
             .then(
                 transaction => {
-                    dispatch(success());
-                    // history.push('/login');
-                    // dispatch(alertActions.success('Registration successful'));
+                    dispatch(success('Adding successful'));
+                    history.push('/list');
                 },
                 error => {
                     dispatch(failure(error));
-                    // dispatch(alertActions.error(error));
                 }
             );
     };
 
     function request(transaction) { return { type: transactionsConstants.ADD_REQUEST, transaction } }
-    function success(transaction) { return { type: transactionsConstants.ADD_SUCCESS, transaction } }
+    function success(message) { return { type: transactionsConstants.ADD_SUCCESS, message } }
     function failure(error) { return { type: transactionsConstants.ADD_FAILURE, error } }
 }
 
@@ -74,6 +73,26 @@ function deleteTransaction(id) {
     function failure(id, error) { return { type: transactionsConstants.DELETE_FAILURE, id, error } }
 }
 
+function getBanksList() {
+
+    return dispatch => {
+        dispatch(request());
+
+        fetch_getBanksList()
+            .then(
+                banks => {
+                    dispatch(success(banks));
+                },
+                error => {
+                    dispatch(failure( error));
+                }
+            );
+    };
+
+    function request() { return { type: transactionsConstants.GETBANKS_REQUEST} }
+    function success(banks) { return { type: transactionsConstants.GETBANKS_SUCCESS, banks } }
+    function failure(error) { return { type: transactionsConstants.GETBANKS_FAILURE, error } }
+}
 
 // requests to back end
 
@@ -108,6 +127,16 @@ function fetch_delete(id) {
 }
 
 
+function fetch_getBanksList() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch('/banks', requestOptions).then(handleResponse);
+}
+
+
 function handleResponse(response) {
     if (!response.ok) {
         return Promise.reject(response.statusText);
@@ -115,3 +144,6 @@ function handleResponse(response) {
 
     return response.json();
 }
+
+
+

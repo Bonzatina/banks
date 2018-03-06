@@ -1,3 +1,13 @@
+
+// simulate back-end data
+const bank_list = [
+    {bankId: 1, bankName: 'ALFA'},
+    {bankId: 2, bankName: 'SBER'},
+    {bankId: 3, bankName: 'VTB'},
+    {bankId: 4, bankName: 'OTP'},
+    {bankId: 5, bankName: 'Mercury'}
+];
+
 const init_transactions = [
     {id: 1, amount: 100, bankId: 1},
     {id: 2, amount: 200, bankId: 2},
@@ -5,11 +15,14 @@ const init_transactions = [
     {id: 4, amount: 777, bankId: 1}
 ];
 
+localStorage.setItem('bankListBackEnd', JSON.stringify(bank_list));
+
 if (!localStorage.getItem('transactionsBackEnd')) {
     localStorage.setItem('transactionsBackEnd', JSON.stringify(init_transactions));
 }
 
 
+const banks = JSON.parse(localStorage.getItem('bankListBackEnd'));
 const transactions = JSON.parse(localStorage.getItem('transactionsBackEnd'));
 
 
@@ -38,12 +51,11 @@ export function fakeBackEnd() {
 
                 // add transaction
                 if (url.endsWith('/transactions/add') && opts.method === 'POST') {
+                    // check for fake auth token
                     if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
-                        // get new user object from post body
+
                         let newTransaction = JSON.parse(opts.body);
 
-
-                        // save new user
                         newTransaction.id = transactions.length ? Math.max(...transactions.map(user => user.id)) + 1 : 1;
                         transactions.push(newTransaction);
                         console.log(transactions)
@@ -60,29 +72,26 @@ export function fakeBackEnd() {
 
                 // delete transaction
                 if (url.match(/\/transactions\/\d+$/) && opts.method === 'DELETE') {
-                    console.log("---!----")
-                    // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
+                    // check for fake auth token
                     if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
-                        // find user by id in users array
+
                         let urlParts = url.split('/');
                         let id = parseInt(urlParts[urlParts.length - 1]);
                         for (let i = 0; i < transactions.length; i++) {
                             let transaction = transactions[i];
                             if (transaction.id === id) {
-                                // delete user
+                                // delete transaction
                                 transactions.splice(i, 1);
                                 localStorage.setItem('transactionsBackEnd', JSON.stringify(transactions));
                                 break;
                             }
                         }
-
                         // respond 200 OK
                         resolve({ok: true, json: () => ({})});
                     } else {
                         // return 401 not authorised if token is null or invalid
                         reject('Unauthorised');
                     }
-
                     return;
                 }
 
@@ -105,70 +114,23 @@ export function fakeBackEnd() {
                         // else return error
                         reject('Username or password is incorrect');
                     }
-
-                    return;
-                }
-
-                // get users
-                if (url.endsWith('/users') && opts.method === 'GET') {
-                    // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-                    if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
-                        resolve({ok: true, json: () => users});
-                    } else {
-                        // return 401 not authorised if token is null or invalid
-                        reject('Unauthorised');
-                    }
-
-                    return;
-                }
-
-                // get user by id
-                if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
-                    // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
-                    if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
-                        // find user by id in users array
-                        let urlParts = url.split('/');
-                        let id = parseInt(urlParts[urlParts.length - 1]);
-                        let matchedUsers = users.filter(user => {
-                            return user.id === id;
-                        });
-                        let user = matchedUsers.length ? matchedUsers[0] : null;
-
-                        // respond 200 OK with user
-                        resolve({ok: true, json: () => user});
-                    } else {
-                        // return 401 not authorised if token is null or invalid
-                        reject('Unauthorised');
-                    }
-
                     return;
                 }
 
 
-                // delete user
-                if (url.match(/\/users\/\d+$/) && opts.method === 'DELETE') {
-                    // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
+                // get list of banks
+                if (url.endsWith('/banks') && opts.method === 'GET') {
+
                     if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
-                        // find user by id in users array
-                        let urlParts = url.split('/');
-                        let id = parseInt(urlParts[urlParts.length - 1]);
-                        for (let i = 0; i < users.length; i++) {
-                            let user = users[i];
-                            if (user.id === id) {
-                                // delete user
-                                users.splice(i, 1);
-                                localStorage.setItem('users', JSON.stringify(users));
-                                break;
-                            }
+                        if (transactions.length) {
+                            resolve({ok: true, json: () => banks});
+                        } else {
+                            reject('list empty');
                         }
-
-                        // respond 200 OK
-                        resolve({ok: true, json: () => ({})});
-                    } else {
-                        // return 401 not authorised if token is null or invalid
+                    }
+                    else {
                         reject('Unauthorised');
                     }
-
                     return;
                 }
 

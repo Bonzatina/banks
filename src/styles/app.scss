@@ -1,4 +1,6 @@
-
+label, button {
+  margin-right: 10px;
+}
 
 .app_wrapper {
   margin: 0 auto;
@@ -25,9 +27,30 @@
 
 }
 
-.login_form {
-
+.app_form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 150px;
 }
+
+
+.trans_table {
+  width: 100%;
+}
+
+.trans_form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100px
+}
+
+.submit_button {
+  width: 130px;
+  align-self: center;
+}
+
 
 .has-error {
   border: 1px solid red;

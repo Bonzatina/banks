@@ -2,23 +2,28 @@ import React from 'react';
 import { Route,  Link } from 'react-router-dom';
 import { connect } from "react-redux";
 
-import { userActions } from '../actions';
+import { userActions, transactionsActions } from '../actions';
 import ListTrans from './ListTrans';
 import NewTrans from './NewTrans';
 
 class App extends React.Component {
+
+    componentDidMount() {
+        this.props.dispatch(transactionsActions.getBanksList());
+    }
 
     handleLogOut() {
         this.props.dispatch(userActions.logout());
     }
 
     render() {
+        const banks = this.props.appState.banks.banksList;
         return (
             <div className="app_body">
 
                 <div className="app_body_text">
-                    <Route path="/list" component={ListTrans} />
-                    <Route path="/new" component={NewTrans} />
+                    <Route path="/list" render={()=><ListTrans banks={banks}/>}/>
+                    <Route path="/new"  render={()=><NewTrans banks={banks}/>} />
                 </div>
 
                 <div className="nav">

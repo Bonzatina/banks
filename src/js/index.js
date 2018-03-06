@@ -7,6 +7,8 @@ import AppRouter from './components/AppRouter';
 
 import {store} from "../js/store/index";
 
+import {fakeBackEnd} from './fakeBackEnd';
+fakeBackEnd();
 
 ReactDOM.render(
     <Provider store={store}>
@@ -14,5 +16,3 @@ ReactDOM.render(
     </Provider>, document.getElementById("app"));
 
 
-import {fakeBackEnd} from './fakeBackEnd';
-fakeBackEnd();
