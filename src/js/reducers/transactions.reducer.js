@@ -1,5 +1,5 @@
 
-import { transactionsConstants } from "../constants/index";
+import { transactionsConstants } from "src/js/constants/index";
 
 const initialState = {
     transactions: []

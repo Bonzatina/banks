@@ -2,9 +2,9 @@ import React from 'react';
 import { Route,  Link } from 'react-router-dom';
 import { connect } from "react-redux";
 
-import { userActions, transactionsActions } from '../actions';
-import ListTrans from './ListTrans';
-import NewTrans from './NewTrans';
+import { userActions, transactionsActions } from 'src/js/actions';
+import ListTrans from 'src/js/components/ListTrans';
+import NewTrans from 'src/js/components/NewTrans';
 
 class App extends React.Component {
 

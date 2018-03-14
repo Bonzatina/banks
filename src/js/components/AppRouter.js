@@ -1,14 +1,14 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 
-import { AuthedRoute } from '../helpers/AuthedRoute';
-import App from './App';
+import { AuthedRoute } from 'src/js/helpers/AuthedRoute';
+import App from 'src/js/components/App';
 
-import Login from './Login';
+import Login from 'src/js/components/Login';
 
-import { history } from '../helpers/history'
+import { history } from 'src/js/helpers/history'
 
-import '../../styles/app.scss';
+import 'src/styles/app.scss';
 
 export default () => (
     <div className="app_wrapper">

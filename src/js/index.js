@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
 
-import AppRouter from './components/AppRouter';
+import AppRouter from 'src/js/components/AppRouter';
 
 
-import {store} from "../js/store/index";
+import {store} from "src/js/store/index";
 
-import {fakeBackEnd} from './fakeBackEnd';
+import {fakeBackEnd} from 'src/js/fakeBackEnd';
 fakeBackEnd();
 
 ReactDOM.render(

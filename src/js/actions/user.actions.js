@@ -1,5 +1,5 @@
-import { userConstants } from "../constants/index";
-import { history } from '../helpers/history'
+import { userConstants } from "src/js/constants/index";
+import { history } from 'src/js/helpers/history'
 
 export const userActions = {
     login,

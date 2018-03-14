@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 
-import {transactionsActions} from '../actions';
+import {transactionsActions} from 'src/js/actions';
 
 class NewTrans extends React.Component {
 

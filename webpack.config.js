@@ -21,6 +21,14 @@ const config = {
         filename: 'bundle.js',
         path: distPath
     },
+    resolve: {
+        // add alias for application code directory
+        alias:{
+            src: path.resolve( __dirname, 'src' )
+        },
+        extensions: [ '.js' ]
+    },
+
     module: {
         rules: [{
             test: /\.js$/,

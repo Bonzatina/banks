@@ -1,2 +1,2 @@
-export * from './transactions.actions';
-export * from './user.actions';
+export * from 'src/js/actions/transactions.actions';
+export * from 'src/js/actions/user.actions';

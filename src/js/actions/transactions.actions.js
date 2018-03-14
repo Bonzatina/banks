@@ -1,6 +1,6 @@
-import { transactionsConstants } from "../constants/index";
-import { history } from '../helpers/history'
-import { authHeader } from '../helpers';
+import { transactionsConstants } from "src/js/constants/index";
+import { history } from 'src/js/helpers/history'
+import { authHeader } from 'src/js/helpers';
 
 export const addArticle = article => ({ type: ADD_ARTICLE, payload: article });
 

@@ -17,7 +17,6 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
-    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
@@ -39,6 +38,7 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^3.5.4",
-    "webpack-dev-server": "^2.7.1"
+    "webpack-dev-server": "^2.7.1",
+    "redux-logger": "^3.0.6"
   }
 }

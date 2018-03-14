@@ -1,4 +1,4 @@
-export * from './AuthedRoute';
-export * from './history';
+export * from 'src/js/helpers/AuthedRoute';
+export * from 'src/js/helpers/history';
 
-export * from './auth-header';
+export * from 'src/js/helpers/auth-header';
