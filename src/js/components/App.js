@@ -2,14 +2,14 @@ import React from 'react';
 import { Route,  Link } from 'react-router-dom';
 import { connect } from "react-redux";
 
-import { userActions, transactionsActions } from 'src/js/actions';
+import { userActions, banksActions } from 'src/js/actions';
 import ListTrans from 'src/js/components/ListTrans';
 import NewTrans from 'src/js/components/NewTrans';
 
 class App extends React.Component {
 
     componentDidMount() {
-        this.props.dispatch(transactionsActions.getBanksList());
+        this.props.dispatch(banksActions.getBanksList());
     }
 
     handleLogOut() {

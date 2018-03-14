@@ -1,4 +1,4 @@
-import { transactionsConstants } from "src/js/constants/index";
+import { banksConstants } from "src/js/constants/index";
 
 const initialState = {
     banksList: []
@@ -8,15 +8,15 @@ const initialState = {
 export function banks  (state = initialState, action)  {
 
     switch (action.type) {
-        case transactionsConstants.GETBANKS_REQUEST:
+        case banksConstants.GETBANKS_REQUEST:
             return {
                 loading: true
             };
-        case transactionsConstants.GETBANKS_SUCCESS:
+        case banksConstants.GETBANKS_SUCCESS:
             return {
                 banksList: action.banks
             };
-        case transactionsConstants.GETBANKS_FAILURE:
+        case banksConstants.GETBANKS_FAILURE:
             return {
                 error: action.error
             };

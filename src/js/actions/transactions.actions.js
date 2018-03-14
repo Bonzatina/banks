@@ -2,13 +2,11 @@ import { transactionsConstants } from "src/js/constants/index";
 import { history } from 'src/js/helpers/history'
 import { authHeader } from 'src/js/helpers';
 
-export const addArticle = article => ({ type: ADD_ARTICLE, payload: article });
 
 export const transactionsActions = {
     getAll,
     deleteTransaction,
-    addTransaction,
-    getBanksList
+    addTransaction
 };
 
 function getAll() {
@@ -73,26 +71,6 @@ function deleteTransaction(id) {
     function failure(id, error) { return { type: transactionsConstants.DELETE_FAILURE, id, error } }
 }
 
-function getBanksList() {
-
-    return dispatch => {
-        dispatch(request());
-
-        fetch_getBanksList()
-            .then(
-                banks => {
-                    dispatch(success(banks));
-                },
-                error => {
-                    dispatch(failure( error));
-                }
-            );
-    };
-
-    function request() { return { type: transactionsConstants.GETBANKS_REQUEST} }
-    function success(banks) { return { type: transactionsConstants.GETBANKS_SUCCESS, banks } }
-    function failure(error) { return { type: transactionsConstants.GETBANKS_FAILURE, error } }
-}
 
 // requests to back end
 
@@ -124,16 +102,6 @@ function fetch_delete(id) {
     };
 
     return fetch('/transactions/' + id, requestOptions).then(handleResponse);
-}
-
-
-function fetch_getBanksList() {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
-    };
-
-    return fetch('/banks', requestOptions).then(handleResponse);
 }
 
 

@@ -7,7 +7,6 @@ class ListTrans extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(transactionsActions.getAll());
-        this.props.dispatch(transactionsActions.getBanksList());
     }
 
     handleDeleteTransaction(id) {
