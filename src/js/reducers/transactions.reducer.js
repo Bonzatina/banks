@@ -2,7 +2,7 @@
 import { transactionsConstants } from "src/js/constants/index";
 
 const initialState = {
-    transactions: []
+    items: []
 };
 export function transactions  (state = initialState, action)  {
 
@@ -15,7 +15,7 @@ export function transactions  (state = initialState, action)  {
             };
         case transactionsConstants.GETALL_SUCCESS:
             return {
-                ...state, items: action.transactions
+                ...state, items: action.transactions,  loading: false
             };
         case transactionsConstants.GETALL_FAILURE:
             return {

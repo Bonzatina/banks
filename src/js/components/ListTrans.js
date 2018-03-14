@@ -14,7 +14,7 @@ class ListTrans extends React.Component {
     }
 
     render() {
-        const transactions = this.props.appState.transactions.items;
+        const transactions = this.props.transactions.items;
         const banks = this.props.banks;
 
         const Transactions = transactions && banks && transactions.map((transaction) => {
@@ -54,7 +54,7 @@ class ListTrans extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return {appState: state};
+    return {transactions: state.transactions};
 };
 
 const connectedListTrans = connect(mapStateToProps)(ListTrans);

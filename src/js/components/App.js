@@ -17,7 +17,7 @@ class App extends React.Component {
     }
 
     render() {
-        const banks = this.props.appState.banks.banksList;
+        const banks = this.props.banks.banksList;
         return (
             <div className="app_body">
 
@@ -38,7 +38,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return { appState: state };
+    return { banks: state.banks };
 };
 
 const connectedApp = connect(mapStateToProps)(App);
