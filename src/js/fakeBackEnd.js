@@ -58,7 +58,6 @@ export function fakeBackEnd() {
 
                         newTransaction.id = transactions.length ? Math.max(...transactions.map(user => user.id)) + 1 : 1;
                         transactions.push(newTransaction);
-                        console.log(transactions)
                         localStorage.setItem('transactionsBackEnd', JSON.stringify(transactions));
 
                         // respond 200 OK

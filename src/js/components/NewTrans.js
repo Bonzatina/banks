@@ -27,7 +27,6 @@ class NewTrans extends React.Component {
 
                 return bank.bankName === value;
             });
-            console.log(bank)
             if (bank.length > 0) {
                 this.setState({[name]: bank[0].bankId});
             }
